@@ -15,25 +15,35 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {withStyles, withTheme} from '@material-ui/core/styles';
 import logo from '../assets/logo.png'
+import triangles from '../assets/triangles.svg'
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import {HelpOutline, AccountCircle} from '@material-ui/icons';
 import {fade} from '@material-ui/core/styles/colorManipulator';
 import ContainerFluid from "./ContainerFluid";
+import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import Link from "@material-ui/core/es/Link/Link";
+import heroBg from '../assets/hero-bg.jpg'
+import Input from "@material-ui/core/es/Input/Input";
+import InputLabel from "@material-ui/core/es/InputLabel/InputLabel";
+import TextField from "@material-ui/core/TextField";
+import Paper from "@material-ui/core/Paper";
 
 const styles = theme => ({
+  pageBackground: {
+    backgroundImage: `url(${triangles})`,
+  },
   appBar: {
     backgroundColor: theme.palette.common.white,
-    paddingRight: theme.spacing.unit * 6,
-    paddingLeft: theme.spacing.unit * 6,
     position: 'relative',
   },
   logo: {
     height: 26,
+    marginRight: 'auto'
   },
   search: {
     position: 'relative',
-    borderRadius: 40,
+    borderRadius: 200,
     backgroundColor: theme.palette.secondary.main,
     // '&:hover': {
     //   backgroundColor: fade(theme.palette.companyOrange, 0.25),
@@ -47,7 +57,8 @@ const styles = theme => ({
     },
   },
   searchIcon: {
-    width: theme.spacing.unit * 9,
+    width: theme.spacing.unit * 6,
+    color: theme.palette.common.white,
     height: '100%',
     position: 'absolute',
     pointerEvents: 'none',
@@ -60,14 +71,16 @@ const styles = theme => ({
     width: '100%',
   },
   inputInput: {
+    color: theme.palette.common.white,
     paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
+    paddingRight: 15,
     paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
+    paddingLeft: 40,
     transition: theme.transitions.create('width'),
     width: '100%',
+    textTransform: 'upperCase',
     [theme.breakpoints.up('md')]: {
-      width: 200,
+      width: theme.spacing.unit * 16,
     },
   },
   icon: {
@@ -75,14 +88,47 @@ const styles = theme => ({
   },
   logout: {
     color: theme.palette.secondary.main,
+    marginLeft: 26,
+    cursor: 'pointer'
   },
   heroUnit: {
-    backgroundColor: theme.palette.common.white,
+    position: 'relative',
   },
   heroContent: {
-    maxWidth: 600,
-    margin: '0 auto',
-    padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
+    maxWidth: 760,
+    padding: '80px 0 60px',
+  },
+  heroHeadline: {
+    fontSize: 64,
+    fontFamily: '"Merriweather Sans", serif',
+    fontWeight: 'bold',
+    lineHeight: '80px',
+    marginBottom: 50
+  },
+  heroInputLabelText: {
+    fontSize: 20,
+    fontWeight: 500,
+    marginBottom: theme.spacing.unit,
+  },
+  heroInputWrapper: {
+    display: 'flex',
+  },
+  heroInputRoot: {
+    width:'100%',
+  },
+  heroInputInput: {
+    textIndent: theme.spacing.unit * 2,
+  },
+  heroBg: {
+    backgroundImage: `url(${heroBg})`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: -1,
   },
   heroButtons: {
     marginTop: theme.spacing.unit * 4,
@@ -125,105 +171,124 @@ function Homepage(props) {
 
   console.log(props);
   return (
-    <React.Fragment>
+    <div className={classes.pageBackground}>
       <CssBaseline/>
-      <ContainerFluid>
-        <AppBar position="static" className={classes.appBar}>
-          <ContainerFluid maxWidth={1440}>
-            <Toolbar disableGutters>
-              <img src={logo} alt="Logo" className={classes.logo}/>
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon/>
-                </div>
-                <InputBase
-                  placeholder="Szukaj zajęć"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                />
+      <AppBar position="static" className={classes.appBar}>
+        <ContainerFluid maxWidth={1440}>
+          <Toolbar disableGutters>
+            <img src={logo} alt="Logo" className={classes.logo}/>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon/>
               </div>
+              <InputBase
+                placeholder="Szukaj zajęć"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+              />
+            </div>
+            <IconButton aria-label="Help">
               <HelpOutline color={"secondary"}/>
-              <AccountCircle color={"secondary"}/>
-              <Typography className={classes.logout}>Wyloguj się</Typography>
-            </Toolbar>
+            </IconButton>
+            <IconButton aria-label="Profile">
+              <AccountCircle color={"primary"} fontSize={"small"}/>
+            </IconButton>
+            <Link
+              color={"secondary"}
+              onClick={() => {
+                alert("Logged out.");
+              }}
+              aria-label="Logout"
+              className={classes.logout}
+            >Wyloguj się</Link>
+          </Toolbar>
+        </ContainerFluid>
+      </AppBar>
+      <main>
+
+        <div className={classes.heroUnit}>
+          <ContainerFluid maxWidth={1440}>
+            <div className={classes.heroContent}>
+              <Typography
+                component="h2"
+                variant={"h2"}
+                align="left"
+                color="textPrimary"
+                className={classes.heroHeadline}
+              >
+                Zajęcia dla dzieci <br/>
+                w całej Polsce
+              </Typography>
+              <InputLabel>
+                <Typography className={classes.heroInputLabelText}>
+                  Przeszukaj zajęcia
+                </Typography>
+                <Paper className={classes.heroInputWrapper} elevation={1}>
+                  <InputBase
+                    placeholder="Wpisz miejscowość lub nazwę zajęć"
+                    classes={{
+                      root: classes.heroInputRoot,
+                      input: classes.heroInputInput,
+                    }}
+                  />
+                  <IconButton className={classes.heroInputIcon} aria-label="Search">
+                    <SearchIcon/>
+                  </IconButton>
+                </Paper>
+              </InputLabel>
+            </div>
+            <div className={classes.heroBg}/>
           </ContainerFluid>
-        </AppBar>
-      </ContainerFluid>
-        {/*<main>*/}
-        {/*/!* Hero unit *!/*/}
-        {/*<div className={classes.heroUnit}>*/}
-        {/*<div className={classes.heroContent}>*/}
-        {/*<Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>*/}
-        {/*Homepage layout*/}
-        {/*</Typography>*/}
-        {/*<Typography variant="h6" align="center" color="textSecondary" paragraph>*/}
-        {/*Something short and leading about the collection below—its contents, the creator, etc.*/}
-        {/*Make it short and sweet, but not too short so folks don&apos;t simply skip over it*/}
-        {/*entirely.*/}
-        {/*</Typography>*/}
-        {/*<div className={classes.heroButtons}>*/}
-        {/*<Grid container spacing={16} justify="center">*/}
-        {/*<Grid item>*/}
-        {/*<Button variant="contained" color="primary">*/}
-        {/*Main call to action*/}
-        {/*</Button>*/}
-        {/*</Grid>*/}
-        {/*<Grid item>*/}
-        {/*<Button variant="outlined" color="primary">*/}
-        {/*Secondary action*/}
-        {/*</Button>*/}
-        {/*</Grid>*/}
-        {/*</Grid>*/}
-        {/*</div>*/}
-        {/*</div>*/}
-        {/*</div>*/}
+        </div>
+        {/* Hero unit */}
+
         {/*<div className={classNames(classes.layout, classes.cardGrid)}>*/}
-        {/*/!* End hero unit *!/*/}
-        {/*<Grid container spacing={40}>*/}
-        {/*{cards.map(card => (*/}
-        {/*<Grid item key={card} sm={6} md={4} lg={3}>*/}
-        {/*<Card className={classes.card}>*/}
-        {/*<CardMedia*/}
-        {/*className={classes.cardMedia}*/}
-        {/*image="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22288%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20288%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_164edaf95ee%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_164edaf95ee%22%3E%3Crect%20width%3D%22288%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2296.32500076293945%22%20y%3D%22118.8%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" // eslint-disable-line max-len*/}
-        {/*title="Image title"*/}
-        {/*/>*/}
-        {/*<CardContent className={classes.cardContent}>*/}
-        {/*<Typography gutterBottom variant="h5" component="h2">*/}
-        {/*Heading*/}
-        {/*</Typography>*/}
-        {/*<Typography>*/}
-        {/*This is a media card. You can use this section to describe the content.*/}
-        {/*</Typography>*/}
-        {/*</CardContent>*/}
-        {/*<CardActions>*/}
-        {/*<Button size="small" color="primary">*/}
-        {/*View*/}
-        {/*</Button>*/}
-        {/*<Button size="small" color="primary">*/}
-        {/*Edit*/}
-        {/*</Button>*/}
-        {/*</CardActions>*/}
-        {/*</Card>*/}
-        {/*</Grid>*/}
-        {/*))}*/}
-        {/*</Grid>*/}
+          {/*/!* End hero unit *!/*/}
+          {/*<Grid container spacing={40}>*/}
+            {/*{cards.map(card => (*/}
+              {/*<Grid item key={card} sm={6} md={4} lg={3}>*/}
+                {/*<Card className={classes.card}>*/}
+                  {/*<CardMedia*/}
+                    {/*className={classes.cardMedia}*/}
+                    {/*image="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22288%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20288%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_164edaf95ee%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_164edaf95ee%22%3E%3Crect%20width%3D%22288%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2296.32500076293945%22%20y%3D%22118.8%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" // eslint-disable-line max-len*/}
+                    {/*title="Image title"*/}
+                  {/*/>*/}
+                  {/*<CardContent className={classes.cardContent}>*/}
+                    {/*<Typography gutterBottom variant="h5" component="h2">*/}
+                      {/*Heading*/}
+                    {/*</Typography>*/}
+                    {/*<Typography>*/}
+                      {/*This is a media card. You can use this section to describe the content.*/}
+                    {/*</Typography>*/}
+                  {/*</CardContent>*/}
+                  {/*<CardActions>*/}
+                    {/*<Button size="small" color="primary">*/}
+                      {/*View*/}
+                    {/*</Button>*/}
+                    {/*<Button size="small" color="primary">*/}
+                      {/*Edit*/}
+                    {/*</Button>*/}
+                  {/*</CardActions>*/}
+                {/*</Card>*/}
+              {/*</Grid>*/}
+            {/*))}*/}
+          {/*</Grid>*/}
         {/*</div>*/}
-        {/*</main>*/}
-        {/*/!* Footer *!/*/}
-        {/*<footer className={classes.footer}>*/}
+      </main>
+      {/*/!* Footer *!/*/}
+      {/*<footer className={classes.footer}>*/}
         {/*<Typography variant="h6" align="center" gutterBottom>*/}
-        {/*Footer*/}
+          {/*Footer*/}
         {/*</Typography>*/}
         {/*<Typography variant="subtitle1" align="center" color="textSecondary" component="p">*/}
-        {/*Something here to give the footer a purpose!*/}
+          {/*Something here to give the footer a purpose!*/}
         {/*</Typography>*/}
-        {/*</footer>*/}
-        {/*/!* End footer *!/*/}
-    </React.Fragment>
-);
+      {/*</footer>*/}
+      {/*/!* End footer *!/*/}
+    </div>
+  );
 }
 
 Homepage.propTypes = {
@@ -231,6 +296,6 @@ Homepage.propTypes = {
 };
 
 export default compose(
-withTheme(),
-withStyles(styles)
+  withTheme(),
+  withStyles(styles)
 )(Homepage);

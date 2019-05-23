@@ -10,6 +10,9 @@ const theme = createMuiTheme({
     secondary: {
       main: '#F2994A'
     },
+    footer: {
+      copyright: '#828282'
+    },
     text: {
       primary: "rgba(0, 0, 0, 0.87)",
       secondary: "rgba(0, 0, 0, 0.6)",

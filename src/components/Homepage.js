@@ -33,8 +33,21 @@ import Chip from "@material-ui/core/Chip";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import FilledInput from "@material-ui/core/FilledInput";
+import TablePagination from "@material-ui/core/TablePagination";
 
 const styles = theme => ({
+    // '@global': {
+    //   '*::-webkit-scrollbar': {
+    //     width: '0.4em'
+    //   },
+    //   '*::-webkit-scrollbar-track': {
+    //     '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+    //   },
+    //   '*::-webkit-scrollbar-thumb': {
+    //     backgroundColor: 'rgba(0,0,0,.1)',
+    //     outline: '1px solid slategrey'
+    //   }
+    // },
     pageBackground: {
       backgroundImage: `url(${triangles})`,
     },
@@ -143,9 +156,10 @@ const styles = theme => ({
       right: 0,
       zIndex: -1,
     },
-    searchResultsHeading: {
+    sectionHeading: {
       fontSize: 36,
       fontWeight: 'bold',
+      fontFamily: '"Merriweather Sans", serif',
       margin: `${theme.spacing.defaultGutter}px 0`
     },
     searchResultsChipRoot: {
@@ -160,7 +174,7 @@ const styles = theme => ({
     },
     formControl: {
       padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
-      marginRight: 20,
+      marginLeft: 20,
       marginBottom: 20,
       minWidth: 120,
       backgroundColor: theme.palette.common.white,
@@ -175,7 +189,7 @@ const styles = theme => ({
       width: 250,
       '&:focus': {
         backgroundColor: theme.palette.common.white,
-      }
+      },
     },
     filledInput: {
       backgroundColor: theme.palette.common.white,
@@ -186,30 +200,42 @@ const styles = theme => ({
         backgroundColor: theme.palette.common.white,
       }
     },
-
-
     card: {
       height: '100%',
       display:
         'flex',
       flexDirection:
         'column',
-    }
-    ,
+    },
+    cardHeading: {
+      margin: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px ${theme.spacing.unit}px`,
+      fontSize: 20,
+      fontWeight: 'bolder',
+    },
     cardMedia: {
       paddingTop: '56.25%', // 16:9
-    }
-    ,
+    },
     cardContent: {
       flexGrow: 1,
+    },
+    paginationWrapper: {
+      marginTop: theme.spacing.unit * 6
+    },
+    recommendedScrollableContainer: {
+
+      overflowX: 'auto',
     }
-    ,
-    footer: {
-      backgroundColor: theme.palette.background.paper,
-      padding:
-        theme.spacing.unit * 6,
-    }
-    ,
+
+
+
+
+
+
+    // footer: {
+    //   backgroundColor: theme.palette.background.paper,
+    //   padding:
+    //     theme.spacing.unit * 6,
+    // },
   })
 ;
 
@@ -232,6 +258,7 @@ class Homepage extends Component {
     return (
       <div className={classes.pageBackground}>
         <CssBaseline/>
+
         <AppBar position="static" className={classes.appBar}>
           <ContainerFluid maxWidth={1440}>
             <Toolbar disableGutters>
@@ -265,8 +292,8 @@ class Homepage extends Component {
             </Toolbar>
           </ContainerFluid>
         </AppBar>
-        <main>
 
+        <main>
           <div className={classes.heroUnit}>
             <ContainerFluid maxWidth={1440}>
               <div className={classes.heroContent}>
@@ -300,40 +327,44 @@ class Homepage extends Component {
                   </Paper>
                 </InputLabel>
               </div>
-              <div className={classes.heroBg}/>
             </ContainerFluid>
+            <div className={classes.heroBg}/>
           </div>
 
           <ContainerFluid maxWidth={1440}>
-            <div>
-              <Typography
-                component="h3"
-                className={classes.searchResultsHeading}
-              >
-                Wyniki wyszukiwania dla
-                <Chip
-                  classes={{
-                    root: classes.searchResultsChipRoot,
-                    deleteIcon: classes.searchResultsChipIcon,
-                    label: classes.searchResultsChipLabel,
-                  }}
-                  color="primary"
-                  label={"Warszawa"}
-                  onDelete={() => alert('You clicked delete.')}
-                />
-                <Chip
-                  classes={{
-                    root: classes.searchResultsChipRoot,
-                    deleteIcon: classes.searchResultsChipIcon,
-                    label: classes.searchResultsChipLabel,
-                  }}
-                  color="primary"
-                  label={"Skrzypce"}
-                  onDelete={() => alert('You clicked delete.')}
-                />
-              </Typography>
+            <Typography
+              component="h3"
+              className={classes.sectionHeading}
+            >
+              Wyniki wyszukiwania dla
+              <Chip
+                classes={{
+                  root: classes.searchResultsChipRoot,
+                  deleteIcon: classes.searchResultsChipIcon,
+                  label: classes.searchResultsChipLabel,
+                }}
+                color="primary"
+                label={"warszawa"}
+                onDelete={() => alert('You clicked delete.')}
+              />
+              <Chip
+                classes={{
+                  root: classes.searchResultsChipRoot,
+                  deleteIcon: classes.searchResultsChipIcon,
+                  label: classes.searchResultsChipLabel,
+                }}
+                color="primary"
+                label={"skrzypce"}
+                onDelete={() => alert('You clicked delete.')}
+              />
+            </Typography>
+            <Grid
+              container
+              justify="flex-end"
+            >
               <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel className={classes.formControlLabel} htmlFor="filled-age-native-simple">Wiek dziecka</InputLabel>
+                <InputLabel className={classes.formControlLabel} htmlFor="filled-age-native-simple">Wiek
+                  dziecka</InputLabel>
                 <Select
                   classes={{
                     select: classes.selectSelect
@@ -350,7 +381,8 @@ class Homepage extends Component {
                 </Select>
               </FormControl>
               <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel className={classes.formControlLabel} htmlFor="filled-activity-type-native-simple">Typ zajęć</InputLabel>
+                <InputLabel className={classes.formControlLabel} htmlFor="filled-activity-type-native-simple">Typ
+                  zajęć</InputLabel>
                 <Select
                   classes={{
                     select: classes.selectSelect
@@ -358,7 +390,8 @@ class Homepage extends Component {
                   native
                   value={this.state.activityType}
                   onChange={this.handleChange('activityType')}
-                  input={<FilledInput className={classes.filledInput} name="activityType" id="filled-activity-type-native-simple"/>}
+                  input={<FilledInput className={classes.filledInput} name="activityType"
+                                      id="filled-activity-type-native-simple"/>}
                 >
                   <option value="all">Wszystkie</option>
                   <option value="football">Piłka nożna</option>
@@ -367,7 +400,8 @@ class Homepage extends Component {
                 </Select>
               </FormControl>
               <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel className={classes.formControlLabel} htmlFor="filled-location-native-simple">Lokalizacja</InputLabel>
+                <InputLabel className={classes.formControlLabel}
+                            htmlFor="filled-location-native-simple">Lokalizacja</InputLabel>
                 <Select
                   classes={{
                     select: classes.selectSelect
@@ -375,7 +409,8 @@ class Homepage extends Component {
                   native
                   value={this.state.location}
                   onChange={this.handleChange('location')}
-                  input={<FilledInput className={classes.filledInput} name="location" id="filled-location-native-simple"/>}
+                  input={<FilledInput className={classes.filledInput} name="location"
+                                      id="filled-location-native-simple"/>}
                 >
                   <option value=""/>
                   <option value="Warsaw">Warszawa</option>
@@ -383,38 +418,134 @@ class Homepage extends Component {
                   <option value="Poznan">Poznań</option>
                 </Select>
               </FormControl>
-            </div>
-
-            <Grid container spacing={40}>
+            </Grid>
+            <Grid container spacing={24}>
               {cards.map(card => (
-                <Grid item key={card} sm={6} md={4} lg={3}>
+                <Grid item key={card} sm={6} md={4}>
                   <Card className={classes.card}>
+                    <Grid container justify="space-between">
+                      <Grid item>
+                        <Typography gutterBottom variant="h5" component="h2" className={classes.cardHeading}>
+                          Nauka gry na skrzypcach
+                        </Typography>
+                        <CardActions>
+                          <Button size="small" color="primary">
+                            Warszawa
+                          </Button>
+                          <Button size="small" color="secondary">
+                            Muzyka
+                          </Button>
+                        </CardActions>
+                      </Grid>
+                      <Grid item>
+                        <Typography
+                          variant="h5"
+                          component="h2"
+                          className={classes.cardHeading}
+                          style={{marginBottom: 0}}
+                        >
+                          30 zł
+                        </Typography>
+                        <Typography component="span">za zajęcia</Typography>
+                      </Grid>
+                    </Grid>
                     <CardMedia
                       className={classes.cardMedia}
                       image="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22288%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20288%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_164edaf95ee%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_164edaf95ee%22%3E%3Crect%20width%3D%22288%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2296.32500076293945%22%20y%3D%22118.8%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" // eslint-disable-line max-len
                       title="Image title"
                     />
                     <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        Heading
-                      </Typography>
                       <Typography>
-                        This is a media card. You can use this section to describe the content.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet tellus tellus, sed pretium
+                        nisl porttitor feugiat. In sagittis malesuada orci, dictum vulputate lacus congue eu. Morbi
+                        porta velit lorem, eget bibendum purus faucibus nec. Praesent sem tortor, suscipit ac euismod
+                        non, porttitor sed leo.
                       </Typography>
                     </CardContent>
-                    <CardActions>
-                      <Button size="small" color="primary">
-                        View
-                      </Button>
-                      <Button size="small" color="primary">
-                        Edit
-                      </Button>
-                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+            <Paper className={classes.paginationWrapper}>
+              <TablePagination
+                component="div"
+                rowsPerPageOptions={[10, 15, 30]}
+                colSpan={3}
+                count={93}
+                rowsPerPage={15}
+                page={0}
+                labelRowsPerPage={"Wyników na stronę"}
+                SelectProps={{
+                  native: true,
+                }}
+                onChangePage={() => {
+                }}
+              />
+            </Paper>
+          </ContainerFluid>
+
+          <ContainerFluid maxWidth={1440}>
+            <Typography
+              component="h3"
+              className={classes.sectionHeading}
+            >
+              Polecane
+            </Typography>
+            <Grid
+              container
+              wrap={"nowrap"}
+              spacing={24}
+              className={classes.recommendedScrollableContainer}
+            >
+              {cards.map(card => (
+                <Grid item key={card} sm={6} md={4} style={{flexShrink: 0}}>
+                  <Card className={classes.card}>
+                    <Grid container justify="space-between">
+                      <Grid item>
+                        <Typography gutterBottom variant="h5" component="h2" className={classes.cardHeading}>
+                          Nauka gry na skrzypcach
+                        </Typography>
+                        <CardActions>
+                          <Button size="small" color="primary">
+                            Warszawa
+                          </Button>
+                          <Button size="small" color="secondary">
+                            Muzyka
+                          </Button>
+                        </CardActions>
+                      </Grid>
+                      <Grid item>
+                        <Typography
+                          variant="h5"
+                          component="h2"
+                          className={classes.cardHeading}
+                          style={{marginBottom: 0}}
+                        >
+                          30 zł
+                        </Typography>
+                        <Typography component="span">za zajęcia</Typography>
+                      </Grid>
+                    </Grid>
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22288%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20288%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_164edaf95ee%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_164edaf95ee%22%3E%3Crect%20width%3D%22288%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2296.32500076293945%22%20y%3D%22118.8%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" // eslint-disable-line max-len
+                      title="Image title"
+                    />
+                    <CardContent className={classes.cardContent}>
+                      <Typography>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet tellus tellus, sed pretium
+                        nisl porttitor feugiat. In sagittis malesuada orci, dictum vulputate lacus congue eu. Morbi
+                        porta velit lorem, eget bibendum purus faucibus nec. Praesent sem tortor, suscipit ac euismod
+                        non, porttitor sed leo.
+                      </Typography>
+                    </CardContent>
                   </Card>
                 </Grid>
               ))}
             </Grid>
           </ContainerFluid>
+
+
         </main>
         {/*/!* Footer *!/*/}
         {/*<footer className={classes.footer}>*/}
@@ -436,6 +567,5 @@ Homepage.propTypes = {
 };
 
 export default compose(
-  withTheme(),
   withStyles(styles)
 )(Homepage);

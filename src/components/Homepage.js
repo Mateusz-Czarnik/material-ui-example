@@ -15,6 +15,7 @@ import {withStyles} from '@material-ui/core/styles';
 import logo from '../assets/logo.png'
 import triangles from '../assets/triangles.svg'
 import SearchIcon from '@material-ui/icons/Search';
+import MenuIcon from '@material-ui/icons/Menu';
 import InputBase from '@material-ui/core/InputBase';
 import {AccountCircle, HelpOutline, NavigateBefore, NavigateNext} from '@material-ui/icons';
 import ContainerFluid from "./ContainerFluid";
@@ -29,6 +30,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import FilledInput from "@material-ui/core/FilledInput";
 import TablePagination from "@material-ui/core/TablePagination";
+import Hidden from "@material-ui/core/Hidden";
 
 const styles = theme => ({
     '@global': {
@@ -43,8 +45,16 @@ const styles = theme => ({
         outline: '1px solid slategrey'
       }
     },
+    container: {
+      [theme.breakpoints.down('xs')]: {
+        paddingLeft: 15,
+        paddingRight: 15,
+      },
+    },
     pageBackground: {
       backgroundImage: `url(${triangles})`,
+      backgroundSize: 'cover',
+      backgroundPosition: '7vw -7vw',
     },
     appBar: {
       backgroundColor: theme.palette.common.white,
@@ -88,7 +98,6 @@ const styles = theme => ({
       paddingLeft: 40,
       transition: theme.transitions.create('width'),
       width: '100%',
-      textTransform: 'upperCase',
       [theme.breakpoints.up('md')]: {
         width: theme.spacing.unit * 16,
       },
@@ -99,7 +108,8 @@ const styles = theme => ({
     logout: {
       color: theme.palette.secondary.main,
       marginLeft: 26,
-      cursor: 'pointer'
+      cursor: 'pointer',
+      flexShrink: 0,
     },
     heroUnit: {
       position: 'relative',
@@ -155,7 +165,10 @@ const styles = theme => ({
       margin: `${theme.spacing.defaultGutter}px 0`
     },
     searchResultsChipRoot: {
-      marginLeft: 10,
+      marginRight: 10,
+      [theme.breakpoints.up('md')]: {
+        marginLeft: 10,
+      },
     },
     searchResultsChipIcon: {
       color: theme.palette.common.white,
@@ -164,12 +177,20 @@ const styles = theme => ({
     searchResultsChipLabel: {
       color: theme.palette.common.white,
     },
+    selectWrapper: {
+      [theme.breakpoints.down(768)]: {
+        flexWrap: 'nowrap',
+        flexDirection: 'column',
+      },
+    },
     formControl: {
       padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
-      marginLeft: 20,
       marginBottom: 20,
       minWidth: 120,
       backgroundColor: theme.palette.common.white,
+      [theme.breakpoints.up(768)]: {
+        marginLeft: 20,
+      },
     },
     formControlLabel: {
       fontSize: 12,
@@ -178,9 +199,14 @@ const styles = theme => ({
     selectSelect: {
       height: 'auto',
       padding: 0,
-      width: 250,
       '&:focus': {
         backgroundColor: theme.palette.common.white,
+      },
+      [theme.breakpoints.up('sm')]: {
+        width: 170,
+      },
+      [theme.breakpoints.up('lg')]: {
+        width: 250,
       },
     },
     filledInput: {
@@ -213,12 +239,20 @@ const styles = theme => ({
     paginationWrapper: {
       marginTop: theme.spacing.unit * 6
     },
+    paginationCaption: {
+      [theme.breakpoints.down('xs')]: {
+        display: 'none',
+      },
+    },
     recommendedScrollableContainerWrapper: {
       position: 'relative',
     },
     recommendedScrollableContainerButton: {
       position: 'absolute',
       top: '50%',
+      [theme.breakpoints.down('xs')]: {
+        display: 'none',
+      },
     },
     recommendedScrollableContainerButtonLeft: {
       left: -40
@@ -229,6 +263,10 @@ const styles = theme => ({
     recommendedScrollableContainer: {
       marginBottom: 20,
       overflowX: 'auto',
+    },
+    recommendedGridItem: {
+      flexShrink: 0,
+      maxWidth: '100%',
     },
     recommendedScrollableContainerAvatar: {
       height: 56,
@@ -267,42 +305,51 @@ class Homepage extends Component {
         <CssBaseline/>
 
         <AppBar position="static" className={classes.appBar}>
-          <ContainerFluid maxWidth={1440}>
+          <ContainerFluid maxWidth={1440} className={classes.container}>
             <Toolbar disableGutters>
               <img src={logo} alt="Logo" className={classes.logo}/>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon/>
                 </div>
-                <InputBase
-                  placeholder="Szukaj zajęć"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                />
+                <Hidden smDown>
+                  <InputBase
+                    placeholder="SZUKAJ ZAJĘĆ"
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                  />
+                </Hidden>
               </div>
-              <IconButton aria-label="Help">
-                <HelpOutline color={"secondary"}/>
-              </IconButton>
-              <IconButton aria-label="Profile">
-                <AccountCircle color={"primary"} fontSize={"small"}/>
-              </IconButton>
-              <Link
-                color={"secondary"}
-                onClick={() => {
-                  alert("Logged out.");
-                }}
-                aria-label="Logout"
-                className={classes.logout}
-              >Wyloguj się</Link>
+              <Hidden smUp>
+                <IconButton edge="start" color="inherit" aria-label="Menu">
+                  <MenuIcon/>
+                </IconButton>
+              </Hidden>
+              <Hidden xsDown>
+                <IconButton aria-label="Help">
+                  <HelpOutline color={"secondary"}/>
+                </IconButton>
+                <IconButton aria-label="Profile">
+                  <AccountCircle color={"primary"} fontSize={"small"}/>
+                </IconButton>
+                <Link
+                  color={"secondary"}
+                  onClick={() => {
+                    alert("Logged out.");
+                  }}
+                  aria-label="Logout"
+                  className={classes.logout}
+                >Wyloguj się</Link>
+              </Hidden>
             </Toolbar>
           </ContainerFluid>
         </AppBar>
 
         <main>
           <div className={classes.heroUnit}>
-            <ContainerFluid maxWidth={1440}>
+            <ContainerFluid maxWidth={1440} className={classes.container}>
               <div className={classes.heroContent}>
                 <Typography
                   component="h2"
@@ -338,12 +385,15 @@ class Homepage extends Component {
             <div className={classes.heroBg}/>
           </div>
 
-          <ContainerFluid maxWidth={1440}>
+          <ContainerFluid maxWidth={1440} className={classes.container}>
             <Typography
               component="h3"
               className={classes.sectionHeading}
             >
               Wyniki wyszukiwania dla
+              <Hidden mdUp>
+                <br/>
+              </Hidden>
               <Chip
                 classes={{
                   root: classes.searchResultsChipRoot,
@@ -368,6 +418,7 @@ class Homepage extends Component {
             <Grid
               container
               justify="flex-end"
+              className={classes.selectWrapper}
             >
               <FormControl variant="filled" className={classes.formControl}>
                 <InputLabel className={classes.formControlLabel} htmlFor="filled-age-native-simple">Wiek
@@ -430,7 +481,7 @@ class Homepage extends Component {
               {cards.map(card => (
                 <Grid item key={card} sm={6} md={4}>
                   <Card className={classes.card}>
-                    <Grid container justify="space-between">
+                    <Grid container justify="space-between" wrap="nowrap">
                       <Grid item>
                         <Typography gutterBottom variant="h5" component="h2" className={classes.cardHeading}>
                           Nauka gry na skrzypcach
@@ -444,7 +495,7 @@ class Homepage extends Component {
                           </Button>
                         </CardActions>
                       </Grid>
-                      <Grid item>
+                      <Grid item style={{flexShrink: 0}}>
                         <Typography
                           variant="h5"
                           component="h2"
@@ -475,6 +526,9 @@ class Homepage extends Component {
             </Grid>
             <Paper className={classes.paginationWrapper}>
               <TablePagination
+                classes={{
+                  caption: classes.paginationCaption
+                }}
                 component="div"
                 rowsPerPageOptions={[10, 15, 30]}
                 colSpan={3}
@@ -491,7 +545,7 @@ class Homepage extends Component {
             </Paper>
           </ContainerFluid>
 
-          <ContainerFluid maxWidth={1440}>
+          <ContainerFluid maxWidth={1440} className={classes.container}>
             <Typography
               component="h3"
               className={classes.sectionHeading}
@@ -517,9 +571,9 @@ class Homepage extends Component {
                 className={classes.recommendedScrollableContainer}
               >
                 {cards.map(card => (
-                  <Grid item key={card} sm={6} md={4} style={{flexShrink: 0}}>
+                  <Grid item key={card} sm={6} md={4} className={classes.recommendedGridItem}>
                     <Card className={classes.card}>
-                      <Grid container justify="space-between">
+                      <Grid container justify="space-between" wrap="nowrap">
                         <Grid item>
                           <Typography gutterBottom variant="h5" component="h2" className={classes.cardHeading}>
                             Nauka gry na skrzypcach
@@ -533,7 +587,7 @@ class Homepage extends Component {
                             </Button>
                           </CardActions>
                         </Grid>
-                        <Grid item>
+                        <Grid item style={{flexShrink: 0}}>
                           <Typography
                             variant="h5"
                             component="h2"
@@ -580,9 +634,9 @@ class Homepage extends Component {
         </main>
         <footer>
           <Paper className={classes.footerWrapper} square>
-            <ContainerFluid maxWidth={1440} style={{display: 'flex'}}>
+            <ContainerFluid maxWidth={1440} className={classes.container} style={{display: 'flex'}}>
               <Typography className={classes.footerCopyright} component="small" inline>
-                &copy; Copyright 2018 Wszelkie prawa zastrzeżone
+                &copy; Copyright 2018 <Hidden xsDown>Wszelkie prawa zastrzeżone</Hidden>
               </Typography>
               <Typography component="span" inline style={{marginLeft: 'auto'}}>
                 made in <b>Promate</b>

@@ -32,265 +32,275 @@ import FilledInput from "@material-ui/core/FilledInput";
 import TablePagination from "@material-ui/core/TablePagination";
 import Hidden from "@material-ui/core/Hidden";
 
-const styles = theme => ({
-    '@global': {
-      '*::-webkit-scrollbar': {
-        width: '1em'
-      },
-      '*::-webkit-scrollbar-track': {
-        '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
-      },
-      '*::-webkit-scrollbar-thumb': {
-        backgroundColor: 'rgba(0,0,0,.3)',
-        outline: '1px solid slategrey'
-      }
-    },
-    container: {
-      [theme.breakpoints.down('xs')]: {
-        paddingLeft: 15,
-        paddingRight: 15,
-      },
-    },
-    pageBackground: {
-      backgroundImage: `url(${triangles})`,
-      backgroundSize: 'cover',
-      backgroundPosition: '7vw -7vw',
-    },
-    appBar: {
-      backgroundColor: theme.palette.common.white,
-      position: 'relative',
-    },
-    logo: {
-      height: 26,
-      marginRight: 'auto'
-    },
-    search: {
-      position: 'relative',
-      borderRadius: 200,
-      backgroundColor: theme.palette.secondary.main,
-      marginRight: theme.spacing.unit * 2,
-      marginLeft: 0,
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing.unit * 3,
-        width: 'auto',
-      },
-    },
-    searchIcon: {
-      width: theme.spacing.unit * 6,
-      color: theme.palette.common.white,
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    inputRoot: {
-      color: 'inherit',
-      width: '100%',
-    },
-    inputInput: {
-      color: theme.palette.common.white,
-      paddingTop: theme.spacing.unit,
-      paddingRight: 15,
-      paddingBottom: theme.spacing.unit,
-      paddingLeft: 40,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: theme.spacing.unit * 16,
-      },
-    },
-    icon: {
-      marginRight: theme.spacing.unit * 2,
-    },
-    logout: {
-      color: theme.palette.secondary.main,
-      marginLeft: 26,
-      cursor: 'pointer',
-      flexShrink: 0,
-    },
-    heroUnit: {
-      position: 'relative',
-    },
-    heroContent: {
-      maxWidth: 760,
-      padding: '80px 0 60px',
-    },
-    heroHeadline: {
-      fontSize: 64,
-      fontFamily: '"Merriweather Sans", serif',
-      fontWeight: 'bold',
-      lineHeight: '80px',
-      marginBottom: 50
-    },
-    heroInputLabelText: {
-      fontSize: 20,
-      fontWeight: 500,
-      marginBottom: theme.spacing.unit,
-    },
-    heroInputWrapper: {
-      display: 'flex',
-    },
-    heroInputRoot: {
-      width: '100%',
-    },
-    heroInputInput: {
-      textIndent: theme.spacing.unit * 2,
-    },
-    heroInputIconButton: {
-      padding: 6,
-    },
-    heroInputIconAvatar: {
-      height: 36,
-      width: 36,
-      backgroundColor: theme.palette.primary.main,
-    },
-    heroBg: {
-      backgroundImage: `url(${heroBg})`,
-      backgroundPosition: 'center',
-      backgroundSize: 'cover',
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      zIndex: -1,
-    },
-    sectionHeading: {
-      fontSize: 36,
-      fontWeight: 'bold',
-      fontFamily: '"Merriweather Sans", serif',
-      margin: `${theme.spacing.defaultGutter}px 0`
-    },
-    searchResultsChipRoot: {
-      marginRight: 10,
-      [theme.breakpoints.up('md')]: {
-        marginLeft: 10,
-      },
-    },
-    searchResultsChipIcon: {
-      color: theme.palette.common.white,
-      fontSize: 20
-    },
-    searchResultsChipLabel: {
-      color: theme.palette.common.white,
-    },
-    selectWrapper: {
-      [theme.breakpoints.down(768)]: {
-        flexWrap: 'nowrap',
-        flexDirection: 'column',
-      },
-    },
-    formControl: {
-      padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
-      marginBottom: 20,
-      minWidth: 120,
-      backgroundColor: theme.palette.common.white,
-      [theme.breakpoints.up(768)]: {
-        marginLeft: 20,
-      },
-    },
-    formControlLabel: {
-      fontSize: 12,
-      marginBottom: 5,
-    },
-    selectSelect: {
-      height: 'auto',
-      padding: 0,
-      '&:focus': {
-        backgroundColor: theme.palette.common.white,
-      },
-      [theme.breakpoints.up('sm')]: {
-        width: 170,
-      },
-      [theme.breakpoints.up('lg')]: {
-        width: 250,
-      },
-    },
-    filledInput: {
-      backgroundColor: theme.palette.common.white,
-      '&:before,&:after': {
-        display: 'none',
-      },
-      '&:hover': {
-        backgroundColor: theme.palette.common.white,
-      }
-    },
-    card: {
-      height: '100%',
-      display:
-        'flex',
-      flexDirection:
-        'column',
-    },
-    cardHeading: {
-      margin: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px ${theme.spacing.unit}px`,
-      fontSize: 20,
-      fontWeight: 'bolder',
-    },
-    cardMedia: {
-      paddingTop: '56.25%', // 16:9
-    },
-    cardContent: {
-      flexGrow: 1,
-    },
-    paginationWrapper: {
-      marginTop: theme.spacing.unit * 6
-    },
-    paginationCaption: {
-      [theme.breakpoints.down('xs')]: {
-        display: 'none',
-      },
-    },
-    recommendedScrollableContainerWrapper: {
-      position: 'relative',
-    },
-    recommendedScrollableContainerButton: {
-      position: 'absolute',
-      top: '50%',
-      [theme.breakpoints.down('xs')]: {
-        display: 'none',
-      },
-    },
-    recommendedScrollableContainerButtonLeft: {
-      left: -40
-    },
-    recommendedScrollableContainerButtonRight: {
-      right: -40
-    },
-    recommendedScrollableContainer: {
-      marginBottom: 20,
-      overflowX: 'auto',
-    },
-    recommendedGridItem: {
-      flexShrink: 0,
-      maxWidth: '100%',
-    },
-    recommendedScrollableContainerAvatar: {
-      height: 56,
-      width: 56,
-      backgroundColor: theme.palette.common.white,
-    },
-    footerWrapper: {
-      padding: '14px 0',
-      background: '#FAFAFA',
-    },
-    footerCopyright: {
-      fontSize: 14,
-      color: theme.palette.footer.copyright
-    },
-  })
-;
+const cards = [...Array(12)].map((_, i) => i);
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const UNSPLASH_ACCESS_KEY = 'c4072e632e948703675a05f2c42f62c78bc3ac1cfb0006626c5aacfee2f0f1e6';
+
+const styles = theme => ({
+  '@global': {
+    '*::-webkit-scrollbar': {
+      width: '1em'
+    },
+    '*::-webkit-scrollbar-track': {
+      '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+    },
+    '*::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.3)',
+      outline: '1px solid slategrey'
+    }
+  },
+  container: {
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: 15,
+      paddingRight: 15,
+    },
+  },
+  pageBackground: {
+    backgroundImage: `url(${triangles})`,
+    backgroundSize: 'cover',
+    backgroundPosition: '7vw -7vw',
+  },
+  appBar: {
+    backgroundColor: theme.palette.common.white,
+    position: 'relative',
+  },
+  logo: {
+    height: 26,
+    marginRight: 'auto'
+  },
+  search: {
+    position: 'relative',
+    borderRadius: 200,
+    backgroundColor: theme.palette.secondary.main,
+    marginRight: theme.spacing.unit * 2,
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing.unit * 3,
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    width: theme.spacing.unit * 6,
+    color: theme.palette.common.white,
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+    width: '100%',
+  },
+  inputInput: {
+    color: theme.palette.common.white,
+    paddingTop: theme.spacing.unit,
+    paddingRight: 15,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: 40,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: theme.spacing.unit * 16,
+    },
+  },
+  icon: {
+    marginRight: theme.spacing.unit * 2,
+  },
+  logout: {
+    color: theme.palette.secondary.main,
+    marginLeft: 26,
+    cursor: 'pointer',
+    flexShrink: 0,
+  },
+  heroUnit: {
+    position: 'relative',
+  },
+  heroContent: {
+    maxWidth: 760,
+    padding: '80px 0 60px',
+  },
+  heroHeadline: {
+    fontSize: 64,
+    fontFamily: '"Merriweather Sans", serif',
+    fontWeight: 'bold',
+    lineHeight: '80px',
+    marginBottom: 50
+  },
+  heroInputLabelText: {
+    fontSize: 20,
+    fontWeight: 500,
+    marginBottom: theme.spacing.unit,
+  },
+  heroInputWrapper: {
+    display: 'flex',
+  },
+  heroInputRoot: {
+    width: '100%',
+  },
+  heroInputInput: {
+    textIndent: theme.spacing.unit * 2,
+  },
+  heroInputIconButton: {
+    padding: 6,
+  },
+  heroInputIconAvatar: {
+    height: 36,
+    width: 36,
+    backgroundColor: theme.palette.primary.main,
+  },
+  heroBg: {
+    backgroundImage: `url(${heroBg})`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: -1,
+  },
+  sectionHeading: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    fontFamily: '"Merriweather Sans", serif',
+    margin: `${theme.spacing.defaultGutter}px 0`
+  },
+  searchResultsChipRoot: {
+    marginRight: 10,
+    [theme.breakpoints.up('md')]: {
+      marginLeft: 10,
+    },
+  },
+  searchResultsChipIcon: {
+    color: theme.palette.common.white,
+    fontSize: 20
+  },
+  searchResultsChipLabel: {
+    color: theme.palette.common.white,
+  },
+  selectWrapper: {
+    [theme.breakpoints.down(768)]: {
+      flexWrap: 'nowrap',
+      flexDirection: 'column',
+    },
+  },
+  formControl: {
+    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+    marginBottom: 20,
+    minWidth: 120,
+    backgroundColor: theme.palette.common.white,
+    [theme.breakpoints.up(768)]: {
+      marginLeft: 20,
+    },
+  },
+  formControlLabel: {
+    fontSize: 12,
+    marginBottom: 5,
+  },
+  selectSelect: {
+    height: 'auto',
+    padding: 0,
+    '&:focus': {
+      backgroundColor: theme.palette.common.white,
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: 170,
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: 250,
+    },
+  },
+  filledInput: {
+    backgroundColor: theme.palette.common.white,
+    '&:before,&:after': {
+      display: 'none',
+    },
+    '&:hover': {
+      backgroundColor: theme.palette.common.white,
+    }
+  },
+  card: {
+    height: '100%',
+    display:
+      'flex',
+    flexDirection:
+      'column',
+  },
+  cardHeading: {
+    margin: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px ${theme.spacing.unit}px`,
+    fontSize: 20,
+    fontWeight: 'bolder',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+  paginationWrapper: {
+    marginTop: theme.spacing.unit * 6
+  },
+  paginationCaption: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+  recommendedScrollableContainerWrapper: {
+    position: 'relative',
+  },
+  recommendedScrollableContainerButton: {
+    position: 'absolute',
+    top: '50%',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+  recommendedScrollableContainerButtonLeft: {
+    left: -40
+  },
+  recommendedScrollableContainerButtonRight: {
+    right: -40
+  },
+  recommendedScrollableContainer: {
+    marginBottom: 20,
+    overflowX: 'auto',
+  },
+  recommendedGridItem: {
+    flexShrink: 0,
+    maxWidth: '100%',
+  },
+  recommendedScrollableContainerAvatar: {
+    height: 56,
+    width: 56,
+    backgroundColor: theme.palette.common.white,
+  },
+  footerWrapper: {
+    padding: '14px 0',
+    background: '#FAFAFA',
+  },
+  footerCopyright: {
+    fontSize: 14,
+    color: theme.palette.footer.copyright
+  },
+});
 
 class Homepage extends Component {
+
+  componentDidMount() {
+    fetch(`https://api.unsplash.com/photos/?client_id=${UNSPLASH_ACCESS_KEY}&per_page=${cards.length}`)
+      .then(res => res.json())
+      .then(data => this.setState({unsplashImages: data}))
+      .catch(err => console.log('Error happened during fetching!', err));
+  }
+
   state = {
     age: '12',
     activityType: 'all',
     location: 'Warsaw',
+    unsplashImages: []
   };
 
   handleChange = name => event => {
@@ -478,8 +488,8 @@ class Homepage extends Component {
               </FormControl>
             </Grid>
             <Grid container spacing={24}>
-              {cards.map(card => (
-                <Grid item key={card} sm={6} md={4}>
+              {this.state.unsplashImages.map(item => (
+                <Grid item key={item.id} sm={6} md={4}>
                   <Card className={classes.card}>
                     <Grid container justify="space-between" wrap="nowrap">
                       <Grid item>
@@ -509,7 +519,7 @@ class Homepage extends Component {
                     </Grid>
                     <CardMedia
                       className={classes.cardMedia}
-                      image="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22288%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20288%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_164edaf95ee%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_164edaf95ee%22%3E%3Crect%20width%3D%22288%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2296.32500076293945%22%20y%3D%22118.8%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" // eslint-disable-line max-len
+                      image={item.urls.small}
                       title="Image title"
                     />
                     <CardContent className={classes.cardContent}>
@@ -570,8 +580,8 @@ class Homepage extends Component {
                 spacing={24}
                 className={classes.recommendedScrollableContainer}
               >
-                {cards.map(card => (
-                  <Grid item key={card} sm={6} md={4} className={classes.recommendedGridItem}>
+                {this.state.unsplashImages.map(item => (
+                  <Grid item key={item.id} sm={6} md={4} className={classes.recommendedGridItem}>
                     <Card className={classes.card}>
                       <Grid container justify="space-between" wrap="nowrap">
                         <Grid item>
@@ -601,7 +611,7 @@ class Homepage extends Component {
                       </Grid>
                       <CardMedia
                         className={classes.cardMedia}
-                        image="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22288%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20288%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_164edaf95ee%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_164edaf95ee%22%3E%3Crect%20width%3D%22288%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2296.32500076293945%22%20y%3D%22118.8%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" // eslint-disable-line max-len
+                        image={item.urls.small}
                         title="Image title"
                       />
                       <CardContent className={classes.cardContent}>

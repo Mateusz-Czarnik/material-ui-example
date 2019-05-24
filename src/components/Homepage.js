@@ -32,10 +32,8 @@ import FilledInput from "@material-ui/core/FilledInput";
 import TablePagination from "@material-ui/core/TablePagination";
 import Hidden from "@material-ui/core/Hidden";
 
-const cards = [...Array(12)].map((_, i) => i);
-
+const numberOfResults = 12;
 const UNSPLASH_ACCESS_KEY = 'c4072e632e948703675a05f2c42f62c78bc3ac1cfb0006626c5aacfee2f0f1e6';
-
 const styles = theme => ({
   '@global': {
     '*::-webkit-scrollbar': {
@@ -290,7 +288,7 @@ const styles = theme => ({
 class Homepage extends Component {
 
   componentDidMount() {
-    fetch(`https://api.unsplash.com/photos/?client_id=${UNSPLASH_ACCESS_KEY}&per_page=${cards.length}`)
+    fetch(`https://api.unsplash.com/photos/?client_id=${UNSPLASH_ACCESS_KEY}&per_page=${numberOfResults}`)
       .then(res => res.json())
       .then(data => this.setState({unsplashImages: data}))
       .catch(err => console.log('Error happened during fetching!', err));

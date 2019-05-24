@@ -3,6 +3,9 @@ import {createMuiTheme} from "@material-ui/core";
 const DEFAULT_GUTTER = 48;
 
 const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
   palette: {
     primary: {
       main: '#27AE60',
